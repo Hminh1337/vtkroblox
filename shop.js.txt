@@ -1,0 +1,45 @@
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
+const services = [
+  { id: 1, name: "Cày Level Roblox", price: 120000 },
+  { id: 2, name: "Farm Beli Blox Fruits", price: 150000 },
+  { id: 3, name: "Nâng Cấp Haki", price: 100000 },
+];
+
+export default function Shop() {
+  const [cart, setCart] = useState([]);
+  
+  const addToCart = (service) => {
+    setCart([...cart, service]);
+  };
+
+  return (
+    <div className="p-6 max-w-3xl mx-auto">
+      <h1 className="text-2xl font-bold mb-4">Dịch Vụ Cày Thuê Roblox</h1>
+      <div className="grid gap-4">
+        {services.map((service) => (
+          <Card key={service.id} className="p-4 flex justify-between items-center">
+            <CardContent>
+              <h2 className="text-lg font-semibold">{service.name}</h2>
+              <p className="text-gray-600">{service.price.toLocaleString()} VND</p>
+            </CardContent>
+            <Button onClick={() => addToCart(service)}>Thêm vào giỏ</Button>
+          </Card>
+        ))}
+      </div>
+      <h2 className="text-xl font-bold mt-6">Giỏ Hàng</h2>
+      <div>
+        {cart.length === 0 ? (
+          <p className="text-gray-500">Chưa có dịch vụ nào trong giỏ.</p>
+        ) : (
+          cart.map((item, index) => (
+            <p key={index} className="text-gray-700">{item.name} - {item.price.toLocaleString()} VND</p>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
